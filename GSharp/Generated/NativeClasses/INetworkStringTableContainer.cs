@@ -30,7 +30,7 @@ namespace GSharp.Generated.NativeClasses {
         System.IntPtr FindTable(string tableName);
         
         /// <param name='stringTable'></param>
-        System.IntPtr GetTable(int stringTable);
+        System.IntPtr GetTable(System.IntPtr stringTable);
         
         int GetNumTables();
         

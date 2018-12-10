@@ -38,11 +38,11 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='param0'></param>
         System.IntPtr GetLuaInterface(byte param0);
         
-        /// <param name='param0'></param>
-        /// <param name='param1'></param>
-        /// <param name='param2'></param>
-        /// <param name='param3'></param>
-        void LoadFile(System.IntPtr param0, System.IntPtr param1, bool param2, bool param3);
+        /// <param name='path'></param>
+        /// <param name='pathId'></param>
+        /// <param name='fromDatatable'></param>
+        /// <param name='fromFile'></param>
+        System.IntPtr LoadFile(System.IntPtr path, System.IntPtr pathId, bool fromDatatable, bool fromFile);
         
         /// <param name='param0'></param>
         void GetCache(System.IntPtr param0);

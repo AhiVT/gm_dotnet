@@ -27,11 +27,11 @@ namespace GSharp.Generated.LuaLibraries {
         double abs(double x);
         
         /// <summary>
-        /// Returns the arc cosine of the given number.
+        /// Returns the [[wikipedia:arc cosine|arc cosine]] of the given number.
         /// </summary>
-        /// <returns>Type: System.Double -  acos</returns>
-        /// <param name='normal'>Value in range of -1 - 1.</param>
-        double acos(double normal);
+        /// <returns>Type: System.Double - An angle in radians, between 0 and pi, which has the given cos value.[[nan]] if the argument is out of range.</returns>
+        /// <param name='cos'>Cosine value in range of -1 to 1.</param>
+        double acos(double cos);
         
         /// <summary>
         /// Calculates the difference between two angles.
@@ -60,25 +60,25 @@ namespace GSharp.Generated.LuaLibraries {
         double Approach(double current, double target, double change);
         
         /// <summary>
-        /// Returns the arc sine of the given number.
+        /// Returns the [[wikipedia:arc sine|arc sine]] of the given number.
         /// </summary>
-        /// <returns>Type: System.Double -  asin</returns>
-        /// <param name='normal'>Value in range of -1 - 1.</param>
+        /// <returns>Type: System.Double - An angle in radians, in the range -pi/2 to pi/2, which has the given sine value.[[nan]] if the argument is out of range.</returns>
+        /// <param name='normal'>Sine value in the range of -1 to 1.</param>
         double asin(double normal);
         
         /// <summary>
-        /// Returns math.atan(y / x) in radians. The result is between -math.pi and math.pi.
+        /// [[wikipedia:atan2|atan2]] functions like LibraryFunctionmathatan(y / x), except it also takes into account the quadrant of the angle and so doesn't have a limited range of output.NoteThe Y argument comes first!
         /// </summary>
-        /// <returns>Type: System.Double - atan2</returns>
+        /// <returns>Type: System.Double - The angle of the line from (0, 0) to (x, y) in radians, in the range -pi to pi.</returns>
         /// <param name='y'>Y coordinate.</param>
         /// <param name='x'>X coordinate.</param>
         double atan2(double y, double x);
         
         /// <summary>
-        /// Returns the arc tangents of the given number.
+        /// Returns the [[wikipedia:arc tangent|arc tangent]] of the given number.
         /// </summary>
-        /// <returns>Type: System.Double -  atan</returns>
-        /// <param name='normal'>Value in range of -1 - 1.</param>
+        /// <returns>Type: System.Double - An angle in radians, in the range -pi/2 to pi/2, which has the given tangent.</returns>
+        /// <param name='normal'>Tangent value.</param>
         double atan(double normal);
         
         /// <summary>
@@ -92,19 +92,19 @@ namespace GSharp.Generated.LuaLibraries {
         /// Basic code for [[wikipedia:Bézier curve|Bézier-Spline]] algorithm.
         /// </summary>
         /// <returns>Type: System.Object - Point on Bezier curve, related to tDiff.</returns>
-        /// <param name='tDiff'></param>
-        /// <param name='tPoints'>A table of TypeVectors</param>
-        /// <param name='tMax'></param>
+        /// <param name='tDiff'>From 0 to 1, where alongside the spline the point will be.</param>
+        /// <param name='tPoints'>A table of TypeVectors. The amount cannot be less than 4.</param>
+        /// <param name='tMax'>Just leave this at 1.</param>
         object BSplinePoint(double tDiff, object[] tPoints, double tMax);
         
         /// <summary>
-        /// Basic code for Bezier-Spline algorithm.
+        /// InternalUse LibraryFunctionmathBSplinePoint instead.Basic code for Bezier-Spline algorithm, helper function for LibraryFunctionmathBSplinePoint.
         /// </summary>
         /// <param name='i'></param>
-        /// <param name='k'></param>
+        /// <param name='k'>BugPull=1477Sending in a value < 1 will result in an infinite loop.</param>
         /// <param name='t'></param>
         /// <param name='tinc'></param>
-        void calcBSplineN(double i, double k, double t, double tinc);
+        double calcBSplineN(double i, double k, double t, double tinc);
         
         /// <summary>
         /// Ceils or rounds a number up.
@@ -123,14 +123,14 @@ namespace GSharp.Generated.LuaLibraries {
         double Clamp(double input, double min, double max);
         
         /// <summary>
-        /// Returns hyperbolic cosine of the given number.
+        /// Returns the [[wikipedia:hyperbolic cosine|hyperbolic cosine]] of the given angle.
         /// </summary>
-        /// <returns>Type: System.Double -  hcos</returns>
-        /// <param name='number'>Value in radians.</param>
+        /// <returns>Type: System.Double - The hyperbolic cosine of the given angle.</returns>
+        /// <param name='number'>Angle in radians.</param>
         double cosh(double number);
         
         /// <summary>
-        /// Returns cosine of given angle.
+        /// Returns the [[wikipedia:cosine|cosine]] of given angle.
         /// </summary>
         /// <returns>Type: System.Double - Cosine of given angle</returns>
         /// <param name='number'>Angle in radians</param>
@@ -163,9 +163,9 @@ namespace GSharp.Generated.LuaLibraries {
         double EaseInOut(double progress, double easeIn, double easeOut);
         
         /// <summary>
-        /// Returns the x power of the euler constant.
+        /// Returns the x power of the Euler constant ''[[wikipedia:e (mathematical constant)|e]]''.
         /// </summary>
-        /// <returns>Type: System.Double -  result</returns>
+        /// <returns>Type: System.Double - e to the specified power</returns>
         /// <param name='exponent'>The exponent for the function.</param>
         double exp(double exponent);
         
@@ -177,7 +177,7 @@ namespace GSharp.Generated.LuaLibraries {
         double floor(double number);
         
         /// <summary>
-        /// Returns the modulus of the specified values.'''NB''': While this is similar to the % operator, '''it will return a negative value if the first argument is negative''', whereas the % operator will return a ''positive'' value '''even if the first operand is negative'''.
+        /// Returns the modulus of the specified values.While this is similar to the % operator, '''it will return a negative value if the first argument is negative''', whereas the % operator will return a ''positive'' value '''even if the first operand is negative'''.
         /// </summary>
         /// <returns>Type: System.Double - The calculated modulus.</returns>
         /// <param name='base'>The base value.</param>
@@ -185,11 +185,10 @@ namespace GSharp.Generated.LuaLibraries {
         double fmod(double @base, double modulator);
         
         /// <summary>
-        /// used to split the number value into a normalized fraction and an exponent. Two values are returned: the first is a value always in the range 1/2 (inclusive) to 1 (exclusive) and the second is an exponent.
+        /// <!-- lua reference desctiption: Returns m and e such that x = m2e, e is an integer and the absolute value of m is in the range ((0.5, 1) (or zero when x is zero).  -->Used to split the number value into a normalized fraction and an exponent. Two values are returned: the first is a multiplier in the range 1/2 (inclusive) to 1 (exclusive) and the second is an integer exponent.The result is such that x eq m*2^e.
         /// </summary>
-        /// <returns>Type: System.Double -  normalizedFraction</returns>
-        /// <param name='inputValue'>The value to get the normalized fraction and the exponent from.</param>
-        double frexp(double inputValue);
+        /// <param name='x'>The value to get the normalized fraction and the exponent from.</param>
+        void frexp(double x);
         
         /// <summary>
         /// Converts an integer to a binary (base-2) string.
@@ -217,7 +216,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <returns>Type: System.Double - Logarithm of x to the given base</returns>
         /// <param name='x'>The value to get the base from exponent from.</param>
-        /// <param name='base'></param>
+        /// <param name='base'>The logarithmic base.</param>
         double log(double x, [OptionalAttribute()] double @base);
         
         /// <summary>
@@ -269,15 +268,15 @@ namespace GSharp.Generated.LuaLibraries {
         void randomseed(double seed);
         
         /// <summary>
-        /// When called without arguments, returns a uniform pseudo-random real number in the range 0 to 1 which includes 0 but excludes 1.When called with an integer number m, returns a uniform pseudo-random integer in the range 1 to m inclusive.When called with two integer numbers m and n, returns a uniform pseudo-random integer in the range m to n inclusive.
+        /// When called without arguments, returns a uniform pseudo-random real number in the range 0 to 1 which includes 0 but excludes 1.When called with an integer number m, returns a uniform pseudo-random integer in the range 1 to m inclusive.When called with two integer numbers m and n, returns a uniform pseudo-random integer in the range m to n inclusive.See also LibraryFunctionmathRand
         /// </summary>
         /// <returns>Type: System.Double - Random value</returns>
         /// <param name='m'>If m is the only parameter: upper limit.<br />If n is also provided: lower limit.If provided, this must be an integer.</param>
         /// <param name='n'>Upper limit.If provided, this must be an integer.</param>
-        double random(double m, double n);
+        double random([OptionalAttribute()] double m, [OptionalAttribute()] double n);
         
         /// <summary>
-        /// Returns a random float between min and max.
+        /// Returns a random float between min and max.See also LibraryFunctionmathrandom
         /// </summary>
         /// <returns>Type: System.Double - Random float between min and max.</returns>
         /// <param name='min'>The minimum value.</param>
@@ -293,14 +292,14 @@ namespace GSharp.Generated.LuaLibraries {
         double Round(double value, [OptionalAttribute()] double decimals);
         
         /// <summary>
-        /// Returns hyperbolic sine of the given number.
+        /// Returns the [[wikipedia:hyperbolic sine|hyperbolic sine]] of the given angle.
         /// </summary>
-        /// <returns>Type: System.Double -  sinh</returns>
-        /// <param name='number'>Value in radians.</param>
+        /// <returns>Type: System.Double - The hyperbolic sine of the given angle.</returns>
+        /// <param name='number'>Angle in radians.</param>
         double sinh(double number);
         
         /// <summary>
-        /// Returns sine of given angle.
+        /// Returns the [[wikipedia:sine|sine]] of given angle.
         /// </summary>
         /// <returns>Type: System.Double - Sine for given angle</returns>
         /// <param name='number'>Angle in radians</param>
@@ -314,16 +313,16 @@ namespace GSharp.Generated.LuaLibraries {
         double sqrt(double value);
         
         /// <summary>
-        /// Returns hyperbolic tangents of the given number.
+        /// Returns the [[wikipedia:hyperbolic tangents|hyperbolic tangents]] of the given number.
         /// </summary>
-        /// <returns>Type: System.Double -  tanh</returns>
-        /// <param name='number'>Value in radians.</param>
+        /// <returns>Type: System.Double - The hyperbolic tangent of the given angle.</returns>
+        /// <param name='number'>Angle in radians.</param>
         double tanh(double number);
         
         /// <summary>
-        /// Returns tangents of given angle.
+        /// Returns the [[wikipedia:tangent (trigonometry)|tangent]] of the given angle.
         /// </summary>
-        /// <returns>Type: System.Double -  tangents</returns>
+        /// <returns>Type: System.Double - The tangent of the given angle.</returns>
         /// <param name='value'>Angle in radians</param>
         double tan(double value);
         
@@ -370,6 +369,6 @@ namespace GSharp.Generated.LuaLibraries {
         /// </summary>
         /// <param name='num'>The number to truncate</param>
         /// <param name='digits'>The amount of digits to keep after the point.</param>
-        void Truncate(double num, double digits);
+        void Truncate(double num, [OptionalAttribute()] double digits);
     }
 }

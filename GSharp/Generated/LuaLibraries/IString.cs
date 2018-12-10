@@ -15,13 +15,29 @@ namespace GSharp.Generated.LuaLibraries {
     
     
     /// <summary>
-    /// 
-    /// <list type='bullet'>
-    /// <listheader><description>The string ''type'' is a sequence of characters.The string ''library'' is a standard Lua library which provides functions for the manipulation of strings. In Garry's Mod there are several extra useful functions added to this library.Every string.</description></listheader>
-    /// <item><description> function that has a string as first argument is also available as a method for the string type. That means that with string.Right("somestring", 4) for example you can also call ("somestring"):Right(4) which will do the same thing.</description></item>
-    /// </list>
-    /// 
-    /// This category lists functions available in the string ''library''.
+    /// The string ''type'' is a sequence of characters.
+    ///
+    ///The string ''library'' is a standard Lua library which provides functions for the manipulation of strings.[https://www.lua.org/pil/20.html]
+    ///
+    ///In Garry's Mod there are several extra useful functions and features added to this library.<br />
+    ///Most notably all strings will access this library through the string metatable index function.[https://github.com/Facepunch/garrysmod/blob/master/garrysmod/lua/includes/extensions/string.lua#L288-L299]
+    ///
+    ///This means all strings are treated like table objects and the string library as its [http://wiki.garrysmod.com/page/Meta_Tables Meta Table]
+    ///prelocal x = "Kittens"
+    ///function string.Foobar(self) return self:Right(4) end
+    ///
+    ///string.Right(x,4) == x:Right(4) == x:Foobar() == ("Kittens"):Right(4) == x[-4]..x[-3]..x[-2]..x[-1]</pre>
+    ///
+    ///The string ''metatable'' however is something else, and to access that you must use getmetatable(""). 
+    ///<br />The difference here is related to [[Metamethods]], such as using (+) instead of (..) to concatenate strings.
+    ///preprint("Kittens" + " And " + "Puppies")
+    ///
+    ///function getmetatable("").__add(str,x) return str..x end // This will work
+    ///function string.__add(str,x) return str..x end // But this will not.</pre>
+    ///See [[Meta Tables]] and [[Metamethods]] for more information.
+    ///WarningMaking changes to the string ''metatable'' is not a good idea unless you know what you are doing. Use the string ''library'' instead.
+    ///
+    ///This category lists functions available in the string ''library''.
     /// </summary>
     public interface IString {
         
@@ -144,7 +160,7 @@ namespace GSharp.Generated.LuaLibraries {
         void gsub(string @string, string pattern, string replacement, [OptionalAttribute()] double maxReplaces);
         
         /// <summary>
-        /// Joins the values of a table together to form a string.This is the reverse of LibraryFunctionstringExplode and is functionally identical to LibraryFunctiontableconcat, but with less features.
+        /// DeprecatedYou really should just use LibraryFunctiontableconcat.Joins the values of a table together to form a string.This is the reverse of LibraryFunctionstringExplode and is functionally identical to LibraryFunctiontableconcat, but with less features.
         /// </summary>
         /// <returns>Type: System.String - Imploded pieces</returns>
         /// <param name='separator'>The separator to insert between each piece.</param>
@@ -299,10 +315,11 @@ namespace GSharp.Generated.LuaLibraries {
         string ToMinutesSeconds(double time);
         
         /// <summary>
-        /// Splits the string into characters and creates a sequential table.
+        /// Splits the string into characters and creates a sequential table of characters.WarningAs a result of the [[Wikipedia:UTF-8|UTF-8]] encoding, non-ASCII characters will be split into more than one character in the output table. Each character value in the output table will always be 1 byte.
         /// </summary>
-        /// <param name='string'>The string you'll turn into a table.</param>
-        void ToTable(string @string);
+        /// <returns>Type: System.Object[] - A sequential table where each value is a character from the given string</returns>
+        /// <param name='str'>The string you'll turn into a table.</param>
+        object[] ToTable(string str);
         
         /// <summary>
         /// Removes leading spaces/characters from a string.

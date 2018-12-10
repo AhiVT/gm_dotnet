@@ -71,6 +71,8 @@ namespace GSharp.GLuaNET
 
         public ILuaBase LuaBase { get; protected set; }
 
+        public ILuaInterface LuaInterface { get; protected set; }
+
         private GLua(lua_State luaState)
         {
             State = luaState;

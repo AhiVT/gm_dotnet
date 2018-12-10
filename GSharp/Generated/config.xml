@@ -43,4 +43,6 @@
   <WikiInterface Category="file" LuaLibraryLocation="file" />
   <WikiInterface Category="math" LuaLibraryLocation="math" />
   <WikiInterface Category="string" LuaLibraryLocation="string" />
+  <WikiInterface Category="player" LuaLibraryLocation="player" />
+  <WikiInterface Category="Entity" LuaLibraryLocation="Entity" />
 </Configuration>

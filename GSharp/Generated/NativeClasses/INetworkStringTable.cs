@@ -20,7 +20,7 @@ namespace GSharp.Generated.NativeClasses {
         
         string GetTableName();
         
-        int GetTableId();
+        System.IntPtr GetTableId();
         
         int GetNumStrings();
         

@@ -1,4 +1,4 @@
-using GSharp;
+﻿using GSharp;
 using GSharp.Generated.NativeClasses;
 using GSharp.GLuaNET;
 using GSharp.Native;
@@ -10,11 +10,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace gm_csluaview
 {
     public static class Module
     {
+        private static readonly object stateLock = new object();
         private static GLua Lua;
         [DllExport("gmod13_open", CallingConvention = CallingConvention.Cdecl)]
         public static int Open(ref lua_State state)
@@ -100,25 +103,45 @@ namespace gm_csluaview
         // defaults.
         private static void SecretPhrase()
         {
-            if (Lua.CheckType(1, LuaType.String) && Lua.CheckType(2, LuaType.Function))
+            lock(stateLock)
             {
-                int callback = -1;
-                Console.WriteLine("Finding the secret phrase...");
+                if (Lua.CheckType(1, LuaType.String) && Lua.CheckType(2, LuaType.Function))
+                {
+                    Console.WriteLine("Finding the secret phrase...");
 
-                // This will freeze the server for five second because we aren't asynchronous
-                System.Threading.Thread.Sleep(5000);
-                // Push the callback function to the stack
-                Lua.Push(2);
-                // Push argument 1 to the stack
-                Lua.Push("rusty bullet hole");
-                // Create the Lua reference after all arguments are passed
-                callback = Lua.ReferenceCreate();
+                    int callback = -1;
+                    // Push the callback function to the stack
+                    Lua.Push(2);
+                    // Create the Lua reference after all arguments are passed
+                    callback = Lua.ReferenceCreate();
 
-                // Push our completed reference back to the stack
-                Lua.ReferencePush(callback);
-                // Call the callback function with our secret phrase as argument 1
-                Lua.Call(1, 0);
+                    Task.Run(() => SecretPhraseWork(callback));
+
+                    IntPtr userData = Lua.GetUserdata(3);
+                    
+                }
             }
+        }
+
+        private static void CallCallback(int callback, dynamic data)
+        {
+            // Push our completed reference back to the stack
+            Lua.ReferencePush(callback);
+            // Push argument 1 to the stack
+            Lua.Push(data);
+            // Call the callback function with our secret phrase as argument 1
+            Lua.Call(1, 0);
+        }
+
+        private static void SecretPhraseWork(int callback)
+        {
+            Console.WriteLine("Beginning the search...");
+
+            // Simulate some hard work!
+            Thread.Sleep(5000);
+
+            Console.WriteLine("Found the phrase!");
+            CallCallback(callback, "rusty bullet hole");
         }
 
         [DllExport("gmod13_close", CallingConvention = CallingConvention.Cdecl)]

@@ -159,9 +159,9 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='filename'></param>
         /// <param name='run'></param>
         /// <param name='showErrors'></param>
-        /// <param name='param3'></param>
-        /// <param name='param4'></param>
-        bool FindAndRunScript(string filename, bool run, bool showErrors, string param3, bool param4);
+        /// <param name='stringToRun'></param>
+        /// <param name='noReturns'></param>
+        bool FindAndRunScript(string filename, bool run, bool showErrors, string stringToRun, bool noReturns);
         
         /// <param name='pathID'></param>
         void SetPathID(string pathID);
@@ -210,7 +210,7 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='printErrors'></param>
         /// <param name='dontPushErrors'></param>
         /// <param name='noReturns'></param>
-        bool RunStringEx(string filename, string path, System.IntPtr stringToRun, bool run, bool printErrors, bool dontPushErrors, bool noReturns);
+        bool RunStringEx(string filename, string path, string stringToRun, bool run, bool printErrors, bool dontPushErrors, bool noReturns);
         
         /// <param name='index'></param>
         /// <param name='str'></param>
@@ -219,7 +219,7 @@ namespace GSharp.Generated.NativeClasses {
         /// <param name='fmt'></param>
         void ErrorFromLua(string fmt);
         
-        System.IntPtr GetCurrentLocation();
+        string GetCurrentLocation();
         
         /// <param name='col'></param>
         /// <param name='fmt'></param>

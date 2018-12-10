@@ -58,7 +58,7 @@ namespace GSharp.Generated.LuaLibraries {
         bool Exists(string name, string path);
         
         /// <summary>
-        /// Returns a list of files and directories inside a single folder.
+        /// Returns a list of files and directories inside a single folder.BugIssue=3437This will have undefined results if a path contains 3+ slashes.
         /// </summary>
         /// <param name='name'>The wildcard to search for. "models/*.mdl" will list .mdl files in the models/ folder.</param>
         /// <param name='path'>The path to look for the files and directories in. See [[File_Search_Paths|this list]] for a list of valid paths.</param>
@@ -66,9 +66,9 @@ namespace GSharp.Generated.LuaLibraries {
         void Find(string name, string path, [OptionalAttribute()] string sorting);
         
         /// <summary>
-        /// Returns if the given file is a directory.
+        /// Returns whether the given file is a directory or not.
         /// </summary>
-        /// <returns>Type: System.Boolean -  isDir</returns>
+        /// <returns>Type: System.Boolean - True if the given path is a directory or false if it is a file.</returns>
         /// <param name='fileName'>The file or directory's name.</param>
         /// <param name='path'>The path type.</param>
         bool IsDir(string fileName, string path);
@@ -83,7 +83,7 @@ namespace GSharp.Generated.LuaLibraries {
         /// <summary>
         /// Attempts to open a file with the given mode.
         /// </summary>
-        /// <returns>Type: System.Object - The opened file</returns>
+        /// <returns>Type: System.Object - The opened file object, or nil if it failed to open due to it not existing or being used by another process.</returns>
         /// <param name='fileName'>The files name. See LibraryFunctionfileWrite for details on filename restrictions when writing to files.</param>
         /// <param name='fileMode'>The mode to open the file in. Possible values are:* '''r''' - read mode* '''w''' - write mode* '''a''' - append mode* '''rb''' - binary read mode* '''wb''' - binary write mode* '''ab''' - binary append mode</param>
         /// <param name='path'>The path type.* "GAME" Structured like base folder (garrysmod/), searches all the mounted content (main folder, addons, mounted games etc)* "LUA" or "lsv" - All Lua folders (lua/) including gamesmodes and addons* "DATA" Data folder (garrysmod/data)* "MOD" Strictly the game folder (garrysmod/), ignores mounting.</param>
@@ -111,5 +111,13 @@ namespace GSharp.Generated.LuaLibraries {
         /// <param name='fileName'>The name of the file being written into.The filename '''must''' end with ".txt", ".jpg", ".png", ".vtf" or ".dat" and the path is relative to the '''data/''' folder.Restricted symbols are: '''" :'''</param>
         /// <param name='content'>The content that will be written into the file.</param>
         void Write(string fileName, string content);
+        
+        /// <summary>
+        /// Attempts to rename a file with the given name to another given name.This function is constrained to the data/ folder.
+        /// </summary>
+        /// <returns>Type: System.Boolean - True on success, false otherwise.</returns>
+        /// <param name='orignalFileName'>The original file or folder name. See LibraryFunctionfileWrite for details on filename restrictions when writing to files.</param>
+        /// <param name='targetFileName'>The target file or folder name. See LibraryFunctionfileWrite for details on filename restrictions when writing to files.</param>
+        bool Rename(string orignalFileName, string targetFileName);
     }
 }

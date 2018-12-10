@@ -1,4 +1,5 @@
-﻿using System;
+using Libraria.Native;
+using System;
 
 namespace GSharp.GLuaNET.TypeMarshals
 {

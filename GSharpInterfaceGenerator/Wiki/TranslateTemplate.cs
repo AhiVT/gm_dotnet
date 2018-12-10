@@ -13,6 +13,7 @@ namespace GSharpInterfaceGenerator.Wiki
     {
         public static new string Title { get; } = "Func";
         public string Description { get; set; }
+        public string Note { get; set; }
         public string Realm { get; set; }
         public string IsClass { get; set; }
     }
@@ -23,6 +24,7 @@ namespace GSharpInterfaceGenerator.Wiki
         public string Type { get; set; }
         public string Name { get; set; }
         public string Desc { get; set; }
+        public string Note { get; set; }
         public string Default { get; set; }
     }
 
@@ -31,6 +33,7 @@ namespace GSharpInterfaceGenerator.Wiki
         public static new string Title { get; } = "Ret";
         public string Type { get; set; }
         public string Desc { get; set; }
+        public string Note { get; set; }
     }
 
     public class ExampleTemplate : Template
@@ -38,12 +41,13 @@ namespace GSharpInterfaceGenerator.Wiki
         public static new string Title { get; } = "Example";
         public string Description { get; set; }
         public string Code { get; set; }
+        public string Note { get; set; }
         public string Output { get; set; }
     }
 
     public static class TranslateTemplate
     {
-        private static List<Type> templateTypes = new List<Type> { typeof(FuncTemplate), typeof(ArgTemplate), typeof(RetTemplate), typeof(ExampleTemplate) };
+        private static readonly List<Type> templateTypes = new List<Type> { typeof(FuncTemplate), typeof(ArgTemplate), typeof(RetTemplate), typeof(ExampleTemplate) };
 
         public static Template Translate(XTemplate xtemplate)
         {

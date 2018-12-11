@@ -1,4 +1,4 @@
-﻿using GSharpInterfaceGenerator.Models;
+using GSharpInterfaceGenerator.Models;
 using System;
 using System.Collections.Generic;
 
@@ -41,9 +41,33 @@ namespace GSharpInterfaceGenerator.Wiki
         public string Output { get; set; }
     }
 
+    public class BugTemplate : Template {
+        public static new string Title { get; } = "Bug";
+        public string Description { get; set; }
+        public string Issue { get; set; }
+        public string Request { get; set; }
+        public string Pull { get; set; }
+        public string Fixed { get; set; }
+    }
+
+    public class NoteTemplate : Template {
+        public static new string Title { get; } = "Note";
+        public string Description { get; set; }
+    }
+
+    public class WarningTemplate : Template {
+        public static new string Title { get; } = "Warning";
+        public string Description { get; set; }
+    }
+
+    public class InternalTemplate : Template {
+        public static new string Title { get; } = "Internal";
+        public string Description { get; set; }
+    }
+
     public static class TranslateTemplate
     {
-        private static List<Type> templateTypes = new List<Type> { typeof(FuncTemplate), typeof(ArgTemplate), typeof(RetTemplate), typeof(ExampleTemplate) };
+        private static readonly List<Type> templateTypes = new List<Type> { typeof(FuncTemplate), typeof(ArgTemplate), typeof(RetTemplate), typeof(ExampleTemplate), typeof(BugTemplate), typeof(NoteTemplate), typeof(WarningTemplate), typeof(InternalTemplate) };
 
         public static Template Translate(XTemplate xtemplate)
         {
